@@ -8,7 +8,6 @@ import path from 'path';
 import routes from './routes';
 import configurePassport from './configs/configurePassport';
 import configureSessions from './configs/configureSessions';
-import configureSchedules from './configs/configureSchedules';
 import './db/models';
 
 (async () => {
@@ -28,8 +27,6 @@ import './db/models';
   configurePassport({ db: global.db, app });
 
   app.listen(process.env.PORT, () => console.log('REST started'));
-
-  await configureSchedules();
 
   routes({ app });
 
