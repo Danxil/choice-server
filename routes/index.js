@@ -5,6 +5,7 @@ import logoutHandler from './handlers/logout';
 import businessConfigHandler from './handlers/businessConfig';
 import getAdminStatistic from './handlers/getAdminStatistic';
 import getOpinionsHandler from './handlers/getOpinions';
+import addOpinionHandler from './handlers/addOpinion';
 import getCandidatesHandler from './handlers/getCandidates';
 import deleteVoteHandler from './handlers/deleteVote';
 import addVoteHandler from './handlers/addVote';
@@ -32,6 +33,7 @@ export default ({ app }) => {
   app.get(`${process.env.API_PREFIX}/business-config`, businessConfigHandler());
   app.get(`${process.env.API_PREFIX}/candidates`, getCandidatesHandler());
   app.get(`${process.env.API_PREFIX}/candidates/:candidateId/opinions`, getOpinionsHandler());
+  app.post(`${process.env.API_PREFIX}/candidates/:candidateId/opinions`, addOpinionHandler());
   app.delete(`${process.env.API_PREFIX}/users/:userId/opinions/:opinionId/votes`, deleteVoteHandler());
   app.post(`${process.env.API_PREFIX}/users/:userId/opinions/:opinionId/votes`, addVoteHandler());
   app.get('/*', (req, res) => {
