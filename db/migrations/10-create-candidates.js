@@ -1,36 +1,22 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Users', {
+    return queryInterface.createTable('Candidates', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      password: {
-        type: Sequelize.STRING,
-        defaultValue: null,
-      },
-      email: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      isAdmin: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
-        allowNull: false,
-      },
-      socialLink: {
+      description: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      socialId: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
-      verified: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+      age: {
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       createdAt: {
@@ -44,6 +30,6 @@ module.exports = {
     });
   },
   down: (queryInterface) => {
-    return queryInterface.dropTable('Users');
+    return queryInterface.dropTable('Candidates');
   },
 };
