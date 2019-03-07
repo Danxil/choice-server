@@ -1,6 +1,41 @@
-export const getOpinions = async ({ candidateId }) => {
+import Sequelize from 'sequelize';
+
+const Op = Sequelize.Op;
+
+export const getNotVerifiedOpinions = async () => {
+  return global.db.Opinion.findAll({
+    where: {
+      verified: false,
+    },
+    include: [
+      global.db.OpinionItem,
+      global.db.Vote,
+      {
+        model: global.db.User,
+        where: {
+          verified: true,
+        },
+        include: [
+          global.db.Education,
+          global.db.Profession,
+          global.db.Location,
+        ],
+      },
+    ],
+    order: [
+      ['createdAt', 'DESC'],
+    ],
+  });
+};
+export const getOpinions = async ({ candidateId, userId }) => {
   const opinions = await global.db.Opinion.findAll({
-    where: { candidateId },
+    where: {
+      candidateId,
+      [Op.or]: [
+        { userId },
+        { verified: true },
+      ],
+    },
     include: [
       global.db.OpinionItem,
       global.db.Vote,
@@ -12,6 +47,9 @@ export const getOpinions = async ({ candidateId }) => {
           global.db.Location,
         ],
       },
+    ],
+    order: [
+      ['createdAt', 'DESC'],
     ],
   });
   return opinions;
@@ -35,6 +73,14 @@ export const deleteVote = async ({ opinionId, userId }) => {
 };
 export const addVote = async ({ opinionId, userId }) => {
   const vote = await global.db.Vote.find({ where: { opinionId, userId } });
-  if (vote) return null;
+  if (vote) throw new Error('This vote already exist');
   return global.db.Vote.create({ opinionId, userId });
+};
+export const verifyOpinion = async ({ opinionId }) => {
+  await global.db.Opinion.update({ verified: true }, { where: { id: opinionId } });
+};
+export const deleteOpinion = async ({ opinionId }) => {
+  await global.db.Vote.destroy({ where: { opinionId } });
+  await global.db.OpinionItem.destroy({ where: { opinionId } });
+  await global.db.Opinion.destroy({ where: { id: opinionId } });
 };

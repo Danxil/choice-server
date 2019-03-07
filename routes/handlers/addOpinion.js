@@ -9,6 +9,11 @@ export default () => async ({
     pros,
   },
 }, res) => {
-  await addOpinion({ candidateId, userId, overallText, cons, pros });
-  res.send(200);
+  try {
+    await addOpinion({ candidateId, userId, overallText, cons, pros });
+    res.send(200);
+  } catch (e) {
+    console.log(e);
+    res.send(400);
+  }
 };

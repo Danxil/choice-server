@@ -26,10 +26,7 @@ module.exports = {
       },
     }));
   },
-  down: (queryInterface) => {
-    return queryInterface.removeColumn('Users', 'professionId')
-    .then(() => queryInterface.removeColumn('Users', 'educationId'))
-    .then(() => queryInterface.removeColumn('Users', 'locationId'))
-    .then(() => queryInterface.removeColumn('Users', 'professionId'));
+  down: () => {
+    return Promise.resolve();
   },
 };

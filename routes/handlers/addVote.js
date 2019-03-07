@@ -1,7 +1,11 @@
 import { addVote } from '../../controllers/opinions';
 
 export default () => async ({ params: { opinionId }, user: { id: userId } }, res) => {
-  const vote = await addVote({ opinionId, userId });
-  if (vote) res.send(200);
-  else res.send(400);
+  try {
+    await addVote({ opinionId, userId });
+    res.send(200);
+  } catch (e) {
+    console.log(e);
+    res.send(400);
+  }
 };
