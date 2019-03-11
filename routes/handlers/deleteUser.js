@@ -1,4 +1,4 @@
-import { deleteUser } from '../../controllers/opinions';
+import { deleteUser } from '../../controllers/user';
 
 export default () => async ({ params: { userId } }, res) => {
   try {

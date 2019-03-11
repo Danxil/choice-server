@@ -2,11 +2,15 @@ import Sequelize from 'sequelize';
 
 const Op = Sequelize.Op;
 
-export const getNotVerifiedOpinions = async () => {
+export const getNotVerifiedOpinions = async ({ candidateId }) => {
+  const where = {
+    verified: false,
+  };
+  if (candidateId) {
+    where.candidateId = candidateId;
+  }
   return global.db.Opinion.findAll({
-    where: {
-      verified: false,
-    },
+    where,
     include: [
       global.db.OpinionItem,
       global.db.Vote,

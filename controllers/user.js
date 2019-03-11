@@ -1,3 +1,5 @@
+import { deleteOpinion } from './opinions';
+
 export const signUp = async ({
   email,
   socialLink,
@@ -21,10 +23,12 @@ export const signUp = async ({
     locationId,
   });
 };
-export const verifyUser = async ({ userId }) => {
-  await global.db.User.update({ verified: true }, { where: { id: userId } });
+export const verifyUser = async ({ userId, socialId }) => {
+  await global.db.User.update({ verified: true, socialId }, { where: { id: userId } });
 };
 export const deleteUser = async ({ userId }) => {
+  const opinions = await global.db.Opinion.findAll({ where: { userId } });
+  await Promise.all(opinions.map(opinion => deleteOpinion({ opinionId: opinion.id })));
   await global.db.User.destroy({ where: { id: userId } });
 };
 export const getNotVerifiedUsers = async () => {
@@ -32,6 +36,11 @@ export const getNotVerifiedUsers = async () => {
     where: {
       verified: false,
     },
+    include: [
+      global.db.Education,
+      global.db.Profession,
+      global.db.Location,
+    ],
     order: [
       ['createdAt', 'DESC'],
     ],

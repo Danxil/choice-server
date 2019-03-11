@@ -12,11 +12,18 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    photoUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   }, {
     name: {
       singular: 'candidate',
       plural: 'candidates',
     },
   });
+  Candidate.associate = (models) => {
+    models.Candidate.hasMany(models.Opinion, { foreignKey: 'candidateId' });
+  };
   return Candidate;
 };

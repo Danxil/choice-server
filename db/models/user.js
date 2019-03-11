@@ -17,6 +17,7 @@ export default (sequelize, DataTypes) => {
     socialLink: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique: true,
     },
     socialId: {
       type: DataTypes.STRING,
@@ -39,7 +40,7 @@ export default (sequelize, DataTypes) => {
     },
   });
   User.associate = (models) => {
-    models.User.hasMany(models.Opinion, { foreignKey: 'userId' });
+    models.User.hasMany(models.Opinion, { foreignKey: 'userId', onDelete: 'CASCADE' });
     models.User.belongsTo(models.Profession, { foreignKey: 'professionId' });
     models.User.belongsTo(models.Location, { foreignKey: 'locationId' });
     models.User.belongsTo(models.Education, { foreignKey: 'educationId' });
