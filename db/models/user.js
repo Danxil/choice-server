@@ -14,6 +14,11 @@ export default (sequelize, DataTypes) => {
       defaultValue: false,
       allowNull: false,
     },
+    isBot: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+      allowNull: false,
+    },
     socialLink: {
       type: DataTypes.STRING,
       allowNull: false,

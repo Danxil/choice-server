@@ -4,8 +4,11 @@ const Op = Sequelize.Op;
 
 const candidatesList = require('../candidates');
 
-const candidates = candidatesList.map(candidate => ({
-  ...candidate,
+const candidates = candidatesList.map(({ name, age, description, photoUrl }) => ({
+  name,
+  age,
+  description,
+  photoUrl,
   createdAt: new Date(null),
   updatedAt: new Date(null),
 }));

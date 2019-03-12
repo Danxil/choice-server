@@ -21,6 +21,11 @@ module.exports = {
         defaultValue: false,
         allowNull: false,
       },
+      isBot: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: false,
+      },
       socialLink: {
         type: Sequelize.STRING,
         allowNull: false,

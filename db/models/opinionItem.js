@@ -1,7 +1,7 @@
 export default (sequelize, DataTypes) => {
   const Opinion = sequelize.define('OpinionItem', {
     text: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     type: {
